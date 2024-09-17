@@ -15,8 +15,12 @@ def create_ad(request):
             ad = form.save(commit=False)
             ad.user = request.user
             ad.save()
-            return redirect('ad_list')  # Replace with your redirect view
+            return redirect('index.html')  # Replace with your redirect view
     else:
         form = AdForm()
     ad_categories = AdCategory.objects.all()
-    return render(request, 'create_ad.html', {'form': form, 'ad_categories': ad_categories})
+    context = {'form': form, 
+               'ad_categories': ad_categories
+               }
+
+    return render(request, 'ads/book.html', context)

@@ -11,16 +11,37 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+#Email Config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config("EMAIL_HOST", cast=str, default=None)
+EMAIL_PORT = config("EMAIL_PORT", cast=str, default='587') # Recommended
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str, default=None)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str, default=None)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)  # Use EMAIL_PORT 587 for TLS
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)  # EUse MAIL_PORT 465 for SSL
+
+ADMIN_USER_NAME=config("ADMIN_USER_NAME", default="Admin user")
+ADMIN_USER_EMAIL=config("ADMIN_USER_EMAIL", default=None)
+
+MANAGERS=[]
+ADMINS=[]
+if all([ADMIN_USER_NAME, ADMIN_USER_EMAIL]):
+    ADMINS +=[
+        (f'{ADMIN_USER_NAME}', f'{ADMIN_USER_EMAIL}')
+    ]
+    MANAGERS=ADMINS
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f3)s6c^33(5galprr*y2d(798kd#p9!c4=mk(bv_9wkiq-4cu*'
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,16 +61,27 @@ INSTALLED_APPS = [
 
     #myapps
     'ads',
+
+    #third party apps
+    'allauth',
+    'allauth_ui',
+    'allauth.account',
+    'allauth.socialaccount',
+    'widget_tweaks',
+    'slippers',
+
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = 'home.urls'
@@ -70,6 +102,20 @@ TEMPLATES = [
     },
 ]
 
+#django allouth config
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Ad-Ventures]"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_NOTIFICATIONS = True
+ACCOUNT_LOGIN_BY_CODE_ENABLED = True
+ALLAUTH_UI_THEME = "coffee"
+
+AUTHENTICATION_BACKENDS = [   
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',    
+]
 WSGI_APPLICATION = 'home.wsgi.application'
 
 

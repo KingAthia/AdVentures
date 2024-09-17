@@ -11,6 +11,7 @@ CATEGORIES = [
 class AdCategory(models.Model):
     name = models.CharField(max_length=20, choices=CATEGORIES, unique=True)
     max_slots = models.PositiveIntegerField(default=10)  # Set default max slots
+    price = models.DecimalField(max_digits=6, decimal_places=2)    
     
     @property
     def open_slots(self):
@@ -25,7 +26,7 @@ class Ad(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to='staticfiles/ads/')
     description = models.TextField()
-    adCategory = models.ForeignKey(AdCategory, on_delete=models.CASCADE)
+    adCategory = models.ForeignKey(AdCategory, on_delete=models.CASCADE, related_name='ads')
     created_at = models.DateTimeField(auto_now_add=True)    
     
     def __str__(self):

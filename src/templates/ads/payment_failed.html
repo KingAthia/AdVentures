@@ -2,7 +2,9 @@
 {% block title %}Payment Failure{% endblock title %}
 {% block body %}
 
-    <h1>Payment Failed</h1>
-    <p>please try again</p>
+    <h1> Payment Failure</h1>
+    <p>Payment failed. Please try again.</p>
+    <a href="{% url 'payment_summary' %}">Back to Payment Summary</a>
+    
 
 {% endblock body %}

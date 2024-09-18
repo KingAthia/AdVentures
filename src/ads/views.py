@@ -116,3 +116,14 @@ def payment_verification(request):
         return render(request, 'ads/payment_success.html')
     else:
         return render(request, 'ads/payment_failed.html')
+    
+@login_required
+def dashboard(request):
+    # Fetch ads submitted by the currently logged-in user
+    user_ads = Ad.objects.filter(user=request.user)
+    
+    context = {
+        'user_ads': user_ads,
+    }
+    
+    return render(request, 'dashboard.html', context)

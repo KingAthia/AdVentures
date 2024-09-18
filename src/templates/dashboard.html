@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}My Dashboard{% endblock title %}
+
+{% block body %}
+    <h1>My Submitted Ads</h1>
+    
+    {% if user_ads %}
+        {% for ad in user_ads %}
+            <div class="ad-entry">
+                <h2>{{ ad.title }}</h2>
+                <p><strong>Description:</strong> {{ ad.description }}</p>
+                <div>
+                    {% if ad.image %}
+                        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" style="max-width: 200px; height: auto;">
+                    {% else %}
+                        <p>No Image</p>
+                    {% endif %}
+                </div>
+                <p><strong>Created At:</strong> {{ ad.created_at|date:"Y-m-d H:i" }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>You have not submitted any ads yet.</p>
+    {% endif %}
+{% endblock body %}

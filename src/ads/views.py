@@ -2,10 +2,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from ads.models import Ad, AdCategory
 from ads.forms import AdForm, AdPaymentForm
+from decimal import Decimal
 
 # Create your views here.
 def home(request):
     return render(request, 'index.html')
+
+# Function to convert Decimal objects to strings in a dictionary
+def convert_decimals_to_strings(data):
+    for key, value in data.items():
+        if isinstance(value, Decimal):
+            data[key] = str(value)
+        elif isinstance(value, dict):
+            convert_decimals_to_strings(value)
+    return data
 
 @login_required
 def create_ad(request):
@@ -14,11 +24,14 @@ def create_ad(request):
         if form.is_valid():
             ad = form.save(commit=False)
             ad.user = request.user
-            ad.save()
-            form.save_m2m()  # Save the many-to-many relationship
-            # Save selected ad categories in session for later use
+            # Save the ad object in session instead of saving to the database
+            request.session['ad_data'] = {
+                'title': ad.title,
+                'description': ad.description,
+                'image': ad.image.url if ad.image else None,
+                'adCategory': [category.id for category in form.cleaned_data['adCategory']]
+            }
             request.session['selected_ad_categories'] = [category.id for category in form.cleaned_data['adCategory']]
-            request.session['ad_id'] = ad.id
             return redirect('ad_payment')  # Redirect to payment step
     else:
         form = AdForm()
@@ -41,7 +54,7 @@ def ad_payment(request):
             # Calculate subtotals for each category
             subtotals = {category.id: category.price * slots_data.get(category.id, 0) for category in ad_categories}
 
-            # Convert data to lists for easier template processing
+            # Prepare summary for display
             categories_summary = [
                 {
                     'category': category,
@@ -50,6 +63,15 @@ def ad_payment(request):
                 }
                 for category in ad_categories
             ]
+
+            # Save payment info in session for later use
+            payment_info = {
+                'slots_data': slots_data,
+                'ad_categories': ad_categories_ids,
+                'total_price': total_price
+            }
+            # Convert Decimal objects to strings before storing in session
+            request.session['payment_info'] = convert_decimals_to_strings(payment_info)
 
             return render(request, 'ads/payment_summary.html', {
                 'total_price': total_price,
@@ -72,20 +94,24 @@ def payment_verification(request):
         slots_data = payment_info.get('slots_data', {})
         ad_categories_ids = payment_info.get('ad_categories', [])
 
-        # Save the Ad objects with the payment verified
-        for category_id in ad_categories_ids:
-            ad_category = AdCategory.objects.get(id=category_id)
-            num_slots = slots_data.get(category_id, 0)
-            for _ in range(num_slots):
-                Ad.objects.create(
-                    user=request.user,
-                    # Other ad fields like title, image, description should be handled
-                    adCategory=ad_category
-                )
+        # Retrieve ad data from session
+        ad_data = request.session.get('ad_data', {})
         
+        # Save the Ad object with the payment verified
+        ad = Ad(
+            user=request.user,
+            title=ad_data.get('title'),
+            description=ad_data.get('description'),
+            image=ad_data.get('image')
+        )
+        ad.save()
+        ad.adCategory.set(AdCategory.objects.filter(id__in=ad_data.get('adCategory', [])))
+        ad.save()
+
         # Clear session data after saving
         request.session.pop('selected_ad_categories', None)
         request.session.pop('payment_info', None)
+        request.session.pop('ad_data', None)
         
         return render(request, 'ads/payment_success.html')
     else:

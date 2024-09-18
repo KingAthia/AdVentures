@@ -3,10 +3,6 @@ from django.contrib.auth.decorators import login_required
 from ads.models import Ad, AdCategory
 from ads.forms import AdForm, AdPaymentForm
 
-# Create your views here.
-def home(request):
-    return render(request, 'index.html')
-
 @login_required
 def create_ad(request):
     if request.method == 'POST':
@@ -14,11 +10,12 @@ def create_ad(request):
         if form.is_valid():
             ad = form.save(commit=False)
             ad.user = request.user
-            ad.save()
-            form.save_m2m()  # Save the many-to-many relationship
+            form.save_m2m()
+            
             # Save selected ad categories in session for later use
             request.session['selected_ad_categories'] = [category.id for category in form.cleaned_data['adCategory']]
             request.session['ad_id'] = ad.id
+            
             return redirect('ad_payment')  # Redirect to payment step
     else:
         form = AdForm()
@@ -28,7 +25,6 @@ def create_ad(request):
 
 @login_required
 def ad_payment(request):
-    # Retrieve selected categories from the session
     ad_categories_ids = request.session.get('selected_ad_categories', [])
     ad_categories = AdCategory.objects.filter(id__in=ad_categories_ids)
 
@@ -37,27 +33,19 @@ def ad_payment(request):
         if form.is_valid():
             slots_data = {category.id: form.cleaned_data[f'slots_{category.id}'] for category in ad_categories}
             total_price = form.calculate_total_price(ad_categories)
-            
-            # Calculate subtotals for each category
-            subtotals = {category.id: category.price * slots_data.get(category.id, 0) for category in ad_categories}
 
-            # Convert data to lists for easier template processing
-            categories_summary = [
-                {
-                    'category': category,
-                    'slots': slots_data.get(category.id, 0),
-                    'subtotal': subtotals.get(category.id, 0)
-                }
-                for category in ad_categories
-            ]
-
-            return render(request, 'ads/payment_summary.html', {
+            # Save the payment information for verification
+            request.session['payment_info'] = {
+                'slots_data': slots_data,
                 'total_price': total_price,
-                'categories_summary': categories_summary
-            })
+                'ad_categories': ad_categories_ids
+            }
+            
+            # Redirect to a payment gateway or payment verification page
+            return redirect('payment_verification')
     else:
         form = AdPaymentForm(ad_categories=ad_categories)
-    
+
     return render(request, 'ads/payment.html', {'form': form, 'ad_categories': ad_categories})
 
 @login_required

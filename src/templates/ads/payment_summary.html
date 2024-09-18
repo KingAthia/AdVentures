@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Payment Summary{% endblock title %}
+{% block body %}
+    <h1>Payment Summary</h1>
+    <p>Number of Slots: {{ num_slots }}</p>
+    <p>Total Price: ${{ total_price }}</p>
+    <!-- Payment button or link to payment gateway here -->
+    <button>Proceed to Payment</button>
+{% endblock body %}

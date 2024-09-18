@@ -27,7 +27,7 @@ class Ad(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to='staticfiles/ads/')
     description = models.TextField()
-    adCategory = models.ForeignKey(AdCategory, on_delete=models.CASCADE, related_name='ads')
+    adCategory = models.ManyToManyField(AdCategory, related_name='ads')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

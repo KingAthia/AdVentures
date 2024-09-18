@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Ad Payment{% endblock title %}
+{% block body %}
+    <h1>Ad Payment</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Calculate Total</button>
+    </form>
+{% endblock body %}

@@ -1,27 +1,10 @@
 {% extends "base.html" %}
-{% block title %}AdVentures{% endblock title %}
+{% block title %}Create Ad{% endblock title %}
 {% block body %}
-    <h1>
-        Book an ad
-    </h1>
-
+    <h1>Create Ad</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        {% if form.errors %}
-            <ul>
-                {% for error in form.non_field_errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <p>Available slots:</p>
-        <ul>
-            {% for category in ad_categories %}
-                <li>{{ category.name }}: {{ category.open_slots }} open slots</li>
-            {% endfor %}
-        </ul>
-        <button type="submit">Submit</button>
+        <button type="submit">Continue</button>
     </form>
-    
 {% endblock body %}

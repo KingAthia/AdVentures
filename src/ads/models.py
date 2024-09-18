@@ -9,7 +9,7 @@ CATEGORIES = [
 ]
 
 class AdCategory(models.Model):
-    name = models.CharField(max_length=20, choices=CATEGORIES, unique=True)
+    adCategory = models.CharField(max_length=20, choices=CATEGORIES, unique=True)
     max_slots = models.PositiveIntegerField(default=10)  # Set default max slots
     price = models.DecimalField(max_digits=6, decimal_places=2)
 
@@ -20,7 +20,7 @@ class AdCategory(models.Model):
         return self.max_slots - booked_slots
 
     def __str__(self):
-        return self.name
+        return self.adCategory
 
 class Ad(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ads')

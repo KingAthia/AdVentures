@@ -33,18 +33,18 @@ def ad_payment(request):
     ad_categories = AdCategory.objects.filter(id__in=ad_categories_ids)
 
     if request.method == 'POST':
-        form = AdPaymentForm(request.POST, initial={'ad_categories': ad_categories})
+        form = AdPaymentForm(request.POST, ad_categories=ad_categories)
         if form.is_valid():
-            total_price = form.calculate_total_price()
-            # You can proceed with payment logic here
-            # Clear the session data after processing
+            total_price = form.calculate_total_price(ad_categories)
+            # Here you would typically process the payment
+            # After processing the payment, you can clear the session
             del request.session['selected_ad_categories']
-            return render(request, 'payment_summary.html', {
+            return render(request, 'ads/payment_summary.html', {
                 'total_price': total_price,
-                'num_slots': form.cleaned_data['total_slots'],
                 'ad_categories': ad_categories,
+                'slots_data': {category.id: form.cleaned_data[f'slots_{category.id}'] for category in ad_categories},
             })
     else:
-        form = AdPaymentForm(initial={'ad_categories': ad_categories})
+        form = AdPaymentForm(ad_categories=ad_categories)
     
-    return render(request, 'ads/payment.html', {'form': form})
+    return render(request, 'ads/payment.html', {'form': form, 'ad_categories': ad_categories})

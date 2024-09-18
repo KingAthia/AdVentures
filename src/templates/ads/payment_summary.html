@@ -2,7 +2,11 @@
 {% block title %}Payment Summary{% endblock title %}
 {% block body %}
     <h1>Payment Summary</h1>
-    <p>Number of Slots: {{ num_slots }}</p>
+    <ul>
+        {% for category in ad_categories %}
+            <li>{{ category.adCategory }}: {{ slots_data.category.id }} slots</li>
+        {% endfor %}
+    </ul>
     <p>Total Price: ${{ total_price }}</p>
     <!-- Payment button or link to payment gateway here -->
     <button>Proceed to Payment</button>

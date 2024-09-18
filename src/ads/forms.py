@@ -21,14 +21,21 @@ class AdForm(forms.ModelForm):
     
     
 class AdPaymentForm(forms.Form):
-    total_slots = forms.IntegerField(min_value=1, label="Number of Slots")
-
     def __init__(self, *args, **kwargs):
-        self.ad_categories = kwargs.pop('initial', {}).get('ad_categories', [])
+        ad_categories = kwargs.pop('ad_categories', [])
         super().__init__(*args, **kwargs)
 
-    def calculate_total_price(self):
+        # Create a field for each ad category to specify the number of slots
+        for category in ad_categories:
+            self.fields[f'slots_{category.id}'] = forms.IntegerField(
+                min_value=1, 
+                label=f"Slots for {category.adCategory}",
+                initial=1  # Default to 1 slot
+            )
+
+    def calculate_total_price(self, ad_categories):
         total_price = 0
-        for category in self.ad_categories:
-            total_price += category.price * self.cleaned_data['total_slots']
+        for category in ad_categories:
+            num_slots = self.cleaned_data.get(f'slots_{category.id}', 0)
+            total_price += category.price * num_slots
         return total_price

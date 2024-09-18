@@ -39,13 +39,21 @@ def ad_payment(request):
             total_price = form.calculate_total_price(ad_categories)
             
             # Calculate subtotals for each category
-            subtotals = {category.id: category.price * slots_data[category.id] for category in ad_categories}
+            subtotals = {category.id: category.price * slots_data.get(category.id, 0) for category in ad_categories}
+
+            # Convert data to lists for easier template processing
+            categories_summary = [
+                {
+                    'category': category,
+                    'slots': slots_data.get(category.id, 0),
+                    'subtotal': subtotals.get(category.id, 0)
+                }
+                for category in ad_categories
+            ]
 
             return render(request, 'ads/payment_summary.html', {
                 'total_price': total_price,
-                'ad_categories': ad_categories,
-                'slots_data': slots_data,
-                'subtotals': subtotals,
+                'categories_summary': categories_summary
             })
     else:
         form = AdPaymentForm(ad_categories=ad_categories)

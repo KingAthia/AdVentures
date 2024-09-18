@@ -12,12 +12,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for category in ad_categories %}
+            {% for item in categories_summary %}
                 <tr>
-                    <td>{{ category.adCategory }}</td>
-                    <td>${{ category.price|floatformat:2 }}</td>
-                    <td>{{ slots_data.category.id }}</td>
-                    <td>${{ subtotals.category.id|floatformat:2 }}</td>
+                    <td>{{ item.category.adCategory }}</td>
+                    <td>${{ item.category.price|floatformat:2 }}</td>
+                    <td>{{ item.slots }}</td>
+                    <td>${{ item.subtotal|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -2,12 +2,32 @@
 {% block title %}Payment Summary{% endblock title %}
 {% block body %}
     <h1>Payment Summary</h1>
-    <ul>
-        {% for category in ad_categories %}
-            <li>{{ category.adCategory }}: {{ slots_data.category.id }} slots</li>
-        {% endfor %}
-    </ul>
-    <p>Total Price: ${{ total_price }}</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Price per Slot</th>
+                <th>Selected Slots</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in ad_categories %}
+                <tr>
+                    <td>{{ category.adCategory }}</td>
+                    <td>${{ category.price }}</td>
+                    <td>{{ slots_data.category.id }}</td>
+                    <td>${{ category.price|floatformat:2 * slots_data.category.id }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3"><strong>Grand Total</strong></td>
+                <td><strong>${{ total_price }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
     <!-- Payment button or link to payment gateway here -->
     <button>Proceed to Payment</button>
 {% endblock body %}

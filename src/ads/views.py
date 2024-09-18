@@ -35,14 +35,17 @@ def ad_payment(request):
     if request.method == 'POST':
         form = AdPaymentForm(request.POST, ad_categories=ad_categories)
         if form.is_valid():
+            slots_data = {category.id: form.cleaned_data[f'slots_{category.id}'] for category in ad_categories}
             total_price = form.calculate_total_price(ad_categories)
-            # Here you would typically process the payment
-            # After processing the payment, you can clear the session
-            del request.session['selected_ad_categories']
+            
+            # Calculate subtotals for each category
+            subtotals = {category.id: category.price * slots_data[category.id] for category in ad_categories}
+
             return render(request, 'ads/payment_summary.html', {
                 'total_price': total_price,
                 'ad_categories': ad_categories,
-                'slots_data': {category.id: form.cleaned_data[f'slots_{category.id}'] for category in ad_categories},
+                'slots_data': slots_data,
+                'subtotals': subtotals,
             })
     else:
         form = AdPaymentForm(ad_categories=ad_categories)

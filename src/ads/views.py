@@ -59,3 +59,34 @@ def ad_payment(request):
         form = AdPaymentForm(ad_categories=ad_categories)
     
     return render(request, 'ads/payment.html', {'form': form, 'ad_categories': ad_categories})
+
+@login_required
+def payment_verification(request):
+    # Here you would handle the payment gateway verification
+    # Simulating a successful payment verification
+    payment_successful = True  # Replace with actual payment verification logic
+    
+    if payment_successful:
+        # Retrieve payment info from session
+        payment_info = request.session.get('payment_info', {})
+        slots_data = payment_info.get('slots_data', {})
+        ad_categories_ids = payment_info.get('ad_categories', [])
+
+        # Save the Ad objects with the payment verified
+        for category_id in ad_categories_ids:
+            ad_category = AdCategory.objects.get(id=category_id)
+            num_slots = slots_data.get(category_id, 0)
+            for _ in range(num_slots):
+                Ad.objects.create(
+                    user=request.user,
+                    # Other ad fields like title, image, description should be handled
+                    adCategory=ad_category
+                )
+        
+        # Clear session data after saving
+        request.session.pop('selected_ad_categories', None)
+        request.session.pop('payment_info', None)
+        
+        return render(request, 'ads/payment_success.html')
+    else:
+        return render(request, 'ads/payment_failed.html')

@@ -15,16 +15,16 @@
             {% for category in ad_categories %}
                 <tr>
                     <td>{{ category.adCategory }}</td>
-                    <td>${{ category.price }}</td>
+                    <td>${{ category.price|floatformat:2 }}</td>
                     <td>{{ slots_data.category.id }}</td>
-                    <td>${{ category.price|floatformat:2 * slots_data.category.id }}</td>
+                    <td>${{ subtotals.category.id|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="3"><strong>Grand Total</strong></td>
-                <td><strong>${{ total_price }}</strong></td>
+                <td><strong>${{ total_price|floatformat:2 }}</strong></td>
             </tr>
         </tfoot>
     </table>

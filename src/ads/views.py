@@ -86,7 +86,7 @@ def ad_payment(request):
 def payment_verification(request):
     # Here you would handle the payment gateway verification
     # Simulating a successful payment verification
-    payment_successful = True  # Replace with actual payment verification logic
+    payment_successful = False  # Replace with actual payment verification logic
     
     if payment_successful:
         # Retrieve payment info from session

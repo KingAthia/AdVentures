@@ -56,32 +56,4 @@ npm run test
 ```
 
 ```
-
-## Routes
-The application uses both public and protected routes. Here’s a breakdown:
-
-### Public Routes
-- **/auth/drivers/login** - Login page for drivers
-- **/auth/drivers/signin** - Sign-up page for drivers
-- **/auth/book-ad/login** - Login page for advertisers
-- **/auth/book-ad/signin** - Sign-up page for advertisers
-
-### Protected Routes
-Accessible only to authenticated users:
-- **/admin** - Admin dashboard
-- **/driver** - Driver’s dashboard
-- **/advertise** - Advertiser’s dashboard
-
-## Contributing
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -m 'Add feature'`
-4. Push the branch: `git push origin feature-name`
-5. Open a Pull Request.
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ---

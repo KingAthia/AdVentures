@@ -96,10 +96,10 @@ const Footer: React.FC = () => {
 
                 </nav>
                 <div className="flex flex-col  max-md:gap-4 max-md:justify-center">
-                    <h1 className="font-semibold md:py-10">Quick Links:</h1>
+                    <h1 className="font-semibold md:pt-10">Quick Links:</h1>
                     <div className="flex max-md:pb-8 max-md:flex-col max-md:justify-start max-md:gap-6 max-md:text-xs md:px-8 md:py-4 md:justify-end">
                         <ul className="flex max-md:gap max-md:px-5 gap-5 justify-end">
-                            <li className={`flex flex-col gap-4  ${isHome ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1  ${isHome ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/'>Home</Link>
                                 {
                                     isHome && (
@@ -108,7 +108,7 @@ const Footer: React.FC = () => {
                                 }
 
                             </li>
-                            <li className={`flex flex-col gap-4 ${isAbout ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1 ${isAbout ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/about-us'>About US</Link>
                                 {
                                     isAbout && (
@@ -116,7 +116,7 @@ const Footer: React.FC = () => {
                                     )
                                 }
                             </li>
-                            <li className={`flex flex-col gap-4 ${isDrivers ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1 ${isDrivers ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/drivers'>Drivers</Link>
                                 {
                                     isDrivers && (
@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
                                     )
                                 }
                             </li>
-                            <li className={`flex flex-col gap-4 ${isBookAd ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1 mr-2 ${isBookAd ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/book-ad'>Book Ad</Link>
                                 {
                                     isBookAd && (
@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
 
                         </ul>
                         <ul className="flex gap-5 justify-end">
-                            <li className={`flex flex-col gap-4 ${isPricing ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1 ${isPricing ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/pricing'>Pricing</Link>
                                 {
                                     isPricing && (
@@ -144,7 +144,7 @@ const Footer: React.FC = () => {
                                     )
                                 }
                             </li>
-                            <li className={`flex flex-col gap-4 ${isContact ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1 ${isContact ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/contact-us'>Contact US</Link>
                                 {
                                     isContact && (
@@ -152,7 +152,7 @@ const Footer: React.FC = () => {
                                     )
                                 }
                             </li>
-                            <li className={`flex flex-col gap-4 ${isPrivacy ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1 ${isPrivacy ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/privacy-policy'>Privacy Policy</Link>
                                 {
                                     isPrivacy && (
@@ -160,7 +160,7 @@ const Footer: React.FC = () => {
                                     )
                                 }
                             </li>
-                            <li className={`flex flex-col gap-4 ${isSupport ? 'font-semibold' : 'font-light'}`}>
+                            <li className={`flex flex-col gap-1 ${isSupport ? 'font-semibold' : 'font-light'}`}>
                                 <Link href='/support'>Support</Link>
                                 {
                                     isSupport && (

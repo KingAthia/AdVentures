@@ -140,8 +140,8 @@ const DriverPage: React.FC = () => {
             </div>
             <div className="flex flex-col gap-7 items-center text-center m-auto md:p-16 max-md:p-5">
                 <p className="text-2xl  font-serif">Don’t let your daily drive go to waste. Turn your vehicle into a moving billboard and earn passive income.  With no upfront costs, no hassle, and total flexibility, there is no reason to miss out on this opportunity. Whether you are driving full-time or part-time, every trip can bring in extra income with ease.</p>
-                <h1 className="text-3xl font-semibold">Join our <span className="text-red-800">diver network</span></h1>
-                <Button className="w-1/4 bg-red-700 font-extrabold text-xl"><Link href={`/auth/drivers/signup`} className="py-3">Join Now</Link></Button>
+                <h1 className="text-3xl font-semibold mt-6">Join our <span className="text-red-800">diver network</span></h1>
+                <Button className="w-1/4 bg-red-600 font-extrabold text-xl py-6"><Link href={`/auth/drivers/signup`} className="py-3">Join Now</Link></Button>
 
             </div>
         </main>

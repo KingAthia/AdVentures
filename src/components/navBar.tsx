@@ -275,7 +275,7 @@ const NavBar: React.FC = () => {
                 </div>
                 <nav>
                     <ul className="flex font-light gap-10 max-md:hidden">
-                        <li className={`flex flex-col gap-4 ${isHome ? 'font-semibold' : 'font-light'}`}>
+                        <li className={`flex flex-col gap-2 ${isHome ? 'font-semibold' : 'font-light'}`}>
                             <Link href='/'>Home</Link>
                             {
                                 isHome && (
@@ -284,7 +284,7 @@ const NavBar: React.FC = () => {
                             }
 
                         </li>
-                        <li className={`flex flex-col gap-4 ${isAbout ? 'font-semibold' : 'font-light'}`}>
+                        <li className={`flex flex-col gap-2 ${isAbout ? 'font-semibold' : 'font-light'}`}>
                             <Link href='/about-us'>About US</Link>
                             {
                                 isAbout && (
@@ -292,7 +292,7 @@ const NavBar: React.FC = () => {
                                 )
                             }
                         </li>
-                        <li className={`flex flex-col gap-4 ${isDrivers ? 'font-semibold' : 'font-light'}`}>
+                        <li className={`flex flex-col gap-2 ${isDrivers ? 'font-semibold' : 'font-light'}`}>
                             <Link href='/drivers'>Drivers</Link>
                             {
                                 isDrivers && (
@@ -300,7 +300,7 @@ const NavBar: React.FC = () => {
                                 )
                             }
                         </li>
-                        <li className={`flex flex-col gap-4 ${isBookAd ? 'font-semibold' : 'font-light'}`}>
+                        <li className={`flex flex-col gap-2 ${isBookAd ? 'font-semibold' : 'font-light'}`}>
                             <Link href='/book-ad'>Book Ad</Link>
                             {
                                 isBookAd && (
@@ -308,7 +308,7 @@ const NavBar: React.FC = () => {
                                 )
                             }
                         </li>
-                        <li className={`flex flex-col gap-4 ${isPricing ? 'font-semibold' : 'font-light'}`}>
+                        <li className={`flex flex-col gap-2 ${isPricing ? 'font-semibold' : 'font-light'}`}>
                             <Link href='/pricing'>Pricing</Link>
                             {
                                 isPricing && (
@@ -316,7 +316,7 @@ const NavBar: React.FC = () => {
                                 )
                             }
                         </li>
-                        <li className={`flex flex-col gap-4 ${isContact ? 'font-semibold' : 'font-light'}`}>
+                        <li className={`flex flex-col gap-2 ${isContact ? 'font-semibold' : 'font-light'}`}>
                             <Link href='/contact-us'>Contact US</Link>
                             {
                                 isContact && (

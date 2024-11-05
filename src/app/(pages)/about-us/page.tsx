@@ -25,7 +25,7 @@ const AboutUsSection: React.FC = () => {
                 </p>
                 <Dialog>
                     <DialogTrigger>
-                        <Button className="bg-red-800 text-3xl font-extrabold p-8">Join us</Button>
+                        <Button className="bg-red-700 text-lg font-extrabold p-6">Join us</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>

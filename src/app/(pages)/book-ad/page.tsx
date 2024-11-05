@@ -38,7 +38,7 @@ const BookAdSection: React.FC = () => {
 
                                 Whether you want to advertise in busy downtown areas or specific neighbourhoods, we provide the flexibility to pinpoint your audience and deliver impactful messages that get results.
                             </p>
-                            <Button className="w-1/4 bg-red-700 max-md:text-sm font-extrabold md:text-lg"><Link href={`/pricing`}>See pricing</Link></Button>
+                            <Button className="w-1/4 bg-red-600 max-md:text-sm font-bold md:text-lg p-6" ><Link href={`/pricing`}>See Pricing</Link></Button>
 
                         </div>
 
@@ -146,8 +146,8 @@ const BookAdSection: React.FC = () => {
             </div>
             <div className="flex flex-col gap-7 items-center text-center m-auto max-md:p-5 md:p-16">
                 <p className="text-2xl  font-serif">Do not settle for traditional ads that miss the mark. With Ad Ventures, you can reach your audience where they are, when it matters most. Our cutting-edge, location-based advertising ensures your message gets in front of the right people – whether it is on billboards, taxi-tops, or digital platforms. Boost your brand visibility and engage customers like never before.</p>
-                <h1 className="text-3xl font-semibold">Ready to boost your market<span className="text-red-800">diver network</span></h1>
-                <Button className="w-1/4 bg-red-700 font-extrabold text-xl"><Link href={`/auth/book-ad/signup`} className="py-3">Book Ad</Link></Button>
+                <h1 className="text-3xl mt-6 font-semibold">Ready to <span className="text-red-800">boost your market</span></h1>
+                <Button className="w-1/4 bg-red-600 font-extrabold text-xl py-6"><Link href={`/auth/book-ad/signup`} className="py-4">Advertise Now</Link></Button>
 
             </div>
         </main>

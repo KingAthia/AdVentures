@@ -59,8 +59,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     #myapps
     'ads',
+    'apis',
 
     #third party apps
     'allauth_ui',
@@ -69,6 +71,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'widget_tweaks',
     'slippers',
+    'rest_framework',
 
 ]
 

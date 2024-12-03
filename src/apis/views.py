@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Ad, AdCategory
+from ads.models import Ad, AdCategory
 from ads.forms import AdForm, AdPaymentForm
 import json
 from decimal import Decimal

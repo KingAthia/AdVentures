@@ -3,11 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}AdVentures{% endblock title %}</title>
+    <title>Ad Booking Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-green': '#2E8B57',
+                        'brand-maroon': '#800000',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    {% block body %}
-    welcome to Ad Ventures
-    {% endblock body %}
+<body class="bg-gray-100">
+    <nav class="bg-brand-green text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'home' %}" class="text-2xl font-bold">AdVentures</a>
+            <div class="space-x-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'create_ad' %}" class="hover:text-brand-maroon">Create Ad</a>
+                    <a href="{% url 'dashboard' %}" class="hover:text-brand-maroon">Dashboard</a>
+                    <a href="{% url 'logout' %}" class="hover:text-brand-maroon">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hover:text-brand-maroon">Login</a>
+                    <a href="{% url 'register' %}" class="hover:text-brand-maroon">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-8 p-4 bg-white shadow-md rounded-lg">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer class="bg-brand-maroon text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Ad Booking Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
+
 </html>
+
+
+

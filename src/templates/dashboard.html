@@ -3,25 +3,30 @@
 {% block title %}My Dashboard{% endblock title %}
 
 {% block body %}
-    <h1>My Submitted Ads</h1>
-    
-    {% if user_ads %}
-        {% for ad in user_ads %}
-            <div class="ad-entry">
-                <h2>{{ ad.title }}</h2>
-                <p><strong>Description:</strong> {{ ad.description }}</p>
-                <div>
-                    {% if ad.image %}
-                        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" style="max-width: 200px; height: auto;">
-                    {% else %}
-                        <p>No Image</p>
-                    {% endif %}
-                </div>
-                <p><strong>Created At:</strong> {{ ad.created_at|date:"d-m-Y H:i" }}</p>
+{% if user_ads %}
+<div class="row">
+{% for ad in user_ads %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            {% if ad.image %}
+            <img src="{{ ad.image.url }}" class="card-img-top" alt="{{ ad.title }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ ad.title }}</h5>
+                <p class="card-text">{{ ad.description|truncatewords:20 }}</p>
+                <p>Categories: 
+                    {% for category in ad.adCategory.all %}
+                    {{ category.adCategory }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p>Created on: {{ ad.created_at|date:"F d, Y" }}</p>
             </div>
-            <hr>
-        {% endfor %}
-    {% else %}
-        <p>You have not submitted any ads yet.</p>
-    {% endif %}
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% else %}
+<p>You have not created any advertisements yet.</p>
+<a href="{% url 'create_ad' %}" class="btn btn-primary">Create an Ad</a>
+{% endif %}
 {% endblock body %}
